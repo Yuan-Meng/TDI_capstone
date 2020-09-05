@@ -4,42 +4,58 @@ import dash_html_components as html
 
 from app import app
 
-layout = [dcc.Markdown("""
-### The Project Goal
+layout = html.Div([
+    html.Br(),
 
-Lockdowns due to the COVID-19 pandemic have loosened up everywhere in the US, but is it safe for me and my friends that I go out and socialize again? 
-It's difficult to provide a generic answer as it would depend on two critical factors:
+    dcc.Markdown(""" ### Project Goals 
 
-1. **Infection risk**: How likely is it that you may contract COVID-19?
-2. **Outcome severity**: If infected, how likely might you experience severe outcomes such as staying in the ICU or even dying?
+    	After months of sheltering in place due to COVID-19, all 50 states in the US have now reopened to varying degrees.
+    	*Now what?* Should we go back to business as usual, as if the pandemic is behind us? Or do we keep inside at all times for another year or two?
+    	
+    	As a data scientist, I refrain from judging people for their decisions; rather, I wish to provide information 
+    	they need to make informed decisions, including: 
 
-This web app makes personalized predictions for both based on your age, sex, pre-existing medical conditions, and the state you live in.
+    	1. **Infection risk**: How likely is it that you may contract COVID-19, given the state you live in and how many people you socialize with?
 
----
-### Use Cases
-1. **For yourself**: Enter your information and estimate your own infection risk and outcome severity.
-2. **For social contacts**: Enter your social contact's information and estimate their risk of socializing with you.
-3. **For state governments**: Adjust safe social bubble size in state guidelines and send out warning to at-risk 
-sub-populations.
+    	2. **Outcome severity**: If infected, how likely will you experience severe outcomes such as ICU stays or even death, given your age, sex, medical condition, etc.?
 
----
+    	To evaluate your risks, you can navigate to the corresponding tabs on top of this page.
 
-### Data Sources
+    	---
 
-Infection risk and outcome severity are predicted from the 4 data sources below:
+    	"""),
 
-1. **Prevalence**: In a given state, what's the probability that a random person has COVID-19? 
-2. **Social bubble size**: For a given user, how many people (themself not included) do they regularly socialize with?
-3. **Contagion probability**: If someone has COVID-19, how likely may they infect someone else?  
-4. **Outcome severity**: If contracted COVID-19, how likely will the user experience severe outcomes?
+    dcc.Markdown(""" ### Use Cases
 
-Prevalence is estimated from each state's testing data, assuming that the positive rate in diagnostic tests reflects the prevalence of COVID-19 in that state. 
-Social bubble size is provided by the user. Contagion probability is taken from published COVID-19 research. Taken 1-3 together, we can estimate the infection risk 
-of a user from a certain state socializing with a certain number of people.
+    	1. **For yourself**: You can use this app to estimate your own infection risk and outcome severity and decide if it's relatively safe to socialize again and with how many.
 
-Outcome severity is predicted by a LightGBM classifier trained on the CDC case surveillance data with 2 million COVID-19 patients' age, sex, medical conditions, and treatment outcomes
-(**mild**: not hospitalized; **moderate**: hospitalized; **severe**: ICU or death).
+    	2. **For your social contacts**: If you wish to socialize with someone who may belong to a vulnerable population (e.g., senior people, people with chronic diseases that 
+    	may worsen COVID-19 symptoms, etc.), you can use this app to estimate their risks and watch out for their safety.
 
-*&copy; 2020 Yuan Meng*
+    	3. **For state governments**: Public health officials can adjust the recommended social bubble size based on their state's underlying infection rate as well as sending out 
+    	warnings to sub-populations that may be subject to severe outcomes if infected.
 
-""")]
+    	----
+
+    	"""),
+
+    dcc.Markdown(""" ### Under the Hood
+
+    	How do I make these predictions? For full details, you can check out my Jupyter Notebooks ([infection risk](https://github.com/Yuan-Meng/TDI_capstone/blob/master/model/infection_risk.ipynb), [outcome severity](https://github.com/Yuan-Meng/TDI_capstone/blob/master/model/outcome_severity.ipynb)).
+    	Below are the main ideas.
+
+    	To predict infection risk, I first assumed that each state's positive viral test rate reflects the underlying infection rate in that state.
+    	Do take this estimate with a grain of salt because high positive rates may be a result of insufficient testing rather than high infection rates. 
+    	Then, I searched the literature for the infectivity of symptomatic and asymptomatic COVID-19 patients and the percentage of each, based on which 
+    	I estimated the probability of a random COVID-19 carrier infecting another person. If someone has prolonged contact with N people, 
+    	the probability of getting infected is 1 minus the probability that none of these N people have COVID-19 nor are they infectious. In consequence, your infection risk
+    	grows pretty quickly with your "social bubble" size.
+
+    	To predict outcome severity, I used the [COVID-19 case surveillance system database](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf)
+    	provided by CDC, which has over 3 million COVID-19 patients' demographic information (sex, age group, race and ethnicity), medical condition, and their treatment outcomes (e.g., hospitalization, ICU stays, and death).
+    	A case is considered severe if either the patient stayed in ICU or died. I built a classification model with [LightGBM](https://lightgbm.readthedocs.io/en/latest/) to predict 
+    	outcome severity based on the user's specific conditions.
+
+    	*&copy; 2020 Yuan Meng*
+
+    	""")])

@@ -17,18 +17,19 @@ style = {'padding': '1.5em'}
 
 layout = html.Div([
 
+    html.Br(),
+
     dcc.Markdown(""" ### "How likely may I get COVID-19?" """),
 
-    dcc.Markdown("""Please answer the 2 questions below to predict
-        how likely you may contract COVID-19."""),
+    html.Br(),
 
-    dcc.Markdown('#### Your prediction:'),
+    dcc.Markdown('#### Predicted infection risk:'),
 
     html.Div(id='infection-prediction', style={'fontWeight': 'bold'}),
 
     html.Div([
         dcc.Markdown('###### State of Residence'),
-        dcc.Markdown("""Which state do you currently live in? Please use [2-letter abbreviations](https://about.usps.com/who-we-are/postal-history/state-abbreviations.htm)
+        dcc.Markdown("""Which state do you currently live in? Please use [2-letter abbreviation](https://about.usps.com/who-we-are/postal-history/state-abbreviations.htm)
             (e.g., "CA" for "California") to indicate:"""),
         dcc.Input(id="state", type="text", placeholder="", value="CA"),
         ], style=style),
@@ -40,6 +41,8 @@ layout = html.Div([
         dcc.Input(id="bubble", type="number", placeholder="", value=10),
         ], style=style),
 
+    dcc.Markdown('#### How risk grows with social bubble'),
+
     ])
 
 # --- 3. Predict outcome severity --- #
@@ -50,17 +53,20 @@ layout = html.Div([
      Input('bubble', 'value')])
 def predict_infection(state, bubble):
 
+    # Positive viral test rate in given state
     with open("model/pos_rate.pkl", "rb") as file:
         df = dill.load(file)
-
-    state_pos = df.loc[df["state"] == str(state), "pos_rate"].values
+    
+    state_pos = df.loc[df["state"] == str(state).upper(), "pos_rate"].values
 
     p_pos = state_pos[0] if len(state_pos) > 0 else 0.05
 
+    # Infectivity of a random COVID-19 carrier
     p_infect = (0.6 * np.median([0.8, 15.4]) + 0.4 * np.median([0.8, 15.4])) / 100
 
+    # Infect risk given social bubble size
     p_infected = 1 - (1 -(p_pos * p_infect)) ** int(bubble)
 
-    results = f"Your probability of contracting COVID-19 from your social contacts is {round(p_infected, 2) * 100}%."
+    results = f"Your probability of contracting COVID-19 from social contacts is {round(p_infected, 2) * 100}%."
 
     return results

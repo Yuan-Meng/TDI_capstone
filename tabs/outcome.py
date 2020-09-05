@@ -17,6 +17,7 @@ style = {'padding': '1.5em'}
 
 layout = html.Div([
 
+    html.Br(),
     dcc.Markdown(""" ### "If I get COVID-19, how bad will it be?" """),
     dcc.Markdown("""Please answer the 4 questions below to predict
         how likely you may experience **severe outcomes** (including ICU stays and death)."""),
