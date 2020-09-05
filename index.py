@@ -10,7 +10,7 @@ style = {'maxWidth': '960px', 'margin': 'auto'}
 app.layout = html.Div([
     dcc.Markdown('# Reopen Navigator'),
     dcc.Markdown('#### Predict Your Risk of COVID-19 Infection and Outcome Severity'),
-    dcc.Markdown("""###### By Yuan Meng ([Website](https://www.yuan-meng.com/), [GitHub](https://github.com/Yuan-Meng/tdi_milestone), [LinkedIn](https://www.linkedin.com/in/yuanmengds/))"""),
+    dcc.Markdown("""###### By Yuan Meng ([Website](https://www.yuan-meng.com/), [GitHub](https://github.com/Yuan-Meng/TDI_capstone), [LinkedIn](https://www.linkedin.com/in/yuanmengds/))"""),
     html.Br(),
     dcc.Tabs(id='tabs', value='tab-intro', children=[
         dcc.Tab(label='About This App', value='tab-intro'),
