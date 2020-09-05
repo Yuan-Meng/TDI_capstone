@@ -18,10 +18,12 @@ style = {'padding': '1.5em'}
 layout = html.Div([
 
     html.Br(),
+
     dcc.Markdown(""" ### "If I get COVID-19, how bad will it be?" """),
-    dcc.Markdown("""Please answer the 4 questions below to predict
-        how likely you may experience **severe outcomes** (including ICU stays and death)."""),
-    dcc.Markdown('#### Your prediction:'),
+
+    dcc.Markdown('---'),
+
+    dcc.Markdown('#### Your predicted outcome severity'),
 
     html.Div(id='outcome-prediction', style={'fontWeight': 'bold'}),
 
@@ -84,6 +86,12 @@ layout = html.Div([
                 ]),
         ], style=style),
 
+    dcc.Markdown('---'),
+
+    dcc.Markdown('#### Factors contributing to severity'),
+
+    html.Img(src='model/feature_imps.png')
+
 ])
 
 # --- 3. Predict outcome severity --- #
@@ -132,6 +140,6 @@ def predict_outcome(sex, age_group, race, medcond):
 
     new_pred = model.predict_proba(df_user)
 
-    results = f"If contracted COVID-19, your probability of having severe outcomes is {round(new_pred.tolist()[0][1] * 100, 2)}%."
+    results = f"Your probability of having severe outcomes is {round(new_pred.tolist()[0][1] * 100, 2)}% if contracted COVID-19."
 
     return results

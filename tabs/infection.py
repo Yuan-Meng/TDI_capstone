@@ -21,9 +21,9 @@ layout = html.Div([
 
     dcc.Markdown(""" ### "How likely may I get COVID-19?" """),
 
-    html.Br(),
+    dcc.Markdown('---'),
 
-    dcc.Markdown('#### Predicted infection risk:'),
+    dcc.Markdown('#### Your predicted infection risk'),
 
     html.Div(id='infection-prediction', style={'fontWeight': 'bold'}),
 
@@ -41,7 +41,34 @@ layout = html.Div([
         dcc.Input(id="bubble", type="number", placeholder="", value=10),
         ], style=style),
 
+    dcc.Markdown('---'),
+
     dcc.Markdown('#### How risk grows with social bubble'),
+
+    dcc.Markdown("""It goes without saying that the more people you socialize with, 
+        the more likely you may be infected by one person or another.
+        However, with our mere imagination, it's hard to tell how quickly infection risk grows
+        with social bubble size. The figure below visualizes this relationship under 3 different infection rates."""),
+
+    dcc.Graph(
+        id='example-graph',
+        figure={
+            'data': [
+                {'x': np.arange(1, 101), 'y': 1 - ((1 - 0.01 * 0.081) ** np.arange(1, 101)), 'type': 'line', 'name': 'Infection Rate = 1%'},
+                {'x': np.arange(1, 101), 'y': 1 - ((1 - 0.05 * 0.081) ** np.arange(1, 101)), 'type': 'line', 'name': 'Infection Rate = 5%'},
+                {'x': np.arange(1, 101), 'y': 1 - ((1 - 0.1 * 0.081) ** np.arange(1, 101)), 'type': 'line', 'name': 'Infection Rate = 10%'},
+            ],
+            'layout': {
+                'title': 'Infection Risk as a Function of Social Bubble Size',
+                'xaxis':{
+                    'title':'Social Bubble',
+                },
+                'yaxis':{
+                    'title':'Probability of Infection'
+                },
+            }
+        }
+    )
 
     ])
 
