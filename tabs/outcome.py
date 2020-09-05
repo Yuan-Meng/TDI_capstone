@@ -75,8 +75,8 @@ layout = html.Div([
 
     html.Div([
         dcc.Markdown('###### Medical Condition'),
-        dcc.Markdown("""Please select "Yes" if you have diabetes, hypertension, cancer, COPD,
-            heart or kidney diseases, or other chronic diseases that might intensify COVID-19 symptoms
+        dcc.Markdown("""Please select "Yes" if you have diabetes, hypertension, asthma, COPD,
+            chronic heart and kidney diseases, or other diseases that may intensify COVID-19 symptoms
             (Not sure? You can check out [CDC guidelines](https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html)!):"""),
         dcc.Dropdown(
             id='medcond',
@@ -101,15 +101,16 @@ layout = html.Div([
 
     dcc.Markdown("""
 
-        If you read the news, chances are you often hear that quite a few factors contribute to
-        severe outcomes of COVID-19, such as advanced age, being biologically male, and having certain pre-existing 
-        medical conditions (e.g., diabetes, COPD, cancer, heart and kidney diseases, etc.).
-        However, you intuition may not be able to tell you the relative importance of these factors, let alone
-        how much each worsens the patient's outcome.
+        If you read the news, chances are you often hear a series of factors contribute to
+        severe outcomes of COVID-19, such as advanced age, having certain pre-existing 
+        medical conditions (e.g., diabetes, COPD, cancer, heart and kidney diseases, etc.), being biologically male, coming
+        from a disadvantaged social group, and so on.
+        However, intuitions alone cannot go so far to tell us the relative importance of these factors, let alone
+        the degree to which each factor worsens the outcome.
  
-        Using [the Shapley value](https://christophm.github.io/interpretable-ml-book/shapley.html), we can figure out more precisely
+        Using [Shapley values](https://christophm.github.io/interpretable-ml-book/shapley.html), we can figure out more precisely
         how much each feature matters to the final prediction and in what way. As can be seen from the figure below, being over 70 
-        and even 80 and having a pre-existing medical condition are major contributors to COVID-19 outcome severity. 
+        and 80 and having a pre-existing medical condition are major contributors to COVID-19 outcome severity. 
 
         """),
 

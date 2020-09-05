@@ -12,7 +12,7 @@ layout = [
 
     dcc.Markdown("""Thanks for checking out my web app and hope it helped you navigate the post-lockdown world!
     	My name is Yuan Meng, a PhD candidate in Psychology at UC Berkeley, a Summer 2020 Fellow at The Data Incubator, and a fellow human being
-    	trying to figure out their life in the pandemic."""),
+    	trying to figure out their life in this pandemic."""),
 
     html.Img(src=app.get_asset_url('yuan_pandemic.jpg'), height=350),
 

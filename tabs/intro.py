@@ -54,7 +54,7 @@ layout = html.Div([
     	To predict outcome severity, I used the [COVID-19 case surveillance system database](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf)
     	provided by CDC, which has over 3 million COVID-19 patients' demographic information (sex, age group, race and ethnicity), medical condition, and their treatment outcomes (e.g., hospitalization, ICU stays, and death).
     	A case is considered severe if either the patient stayed in ICU or died. I built a classification model with [LightGBM](https://lightgbm.readthedocs.io/en/latest/) to predict 
-    	outcome severity based on the user's specific conditions.
+    	outcome severity based on a given user's conditions.
 
     	*&copy; 2020 Yuan Meng*
 
