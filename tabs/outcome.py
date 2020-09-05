@@ -88,9 +88,34 @@ layout = html.Div([
 
     dcc.Markdown('---'),
 
-    dcc.Markdown('#### Factors contributing to severity'),
+    dcc.Markdown("""#### Factors contributing to severity"""),
 
-    html.Img(src='model/feature_imps.png')
+    dcc.Markdown("""
+
+        While most COVID-19 patients didn't experience severe outcomes such as ICU stays or death, some
+        went through hell. What predicts who has what outcome?
+
+        """),
+
+    html.Img(src=app.get_asset_url('outcome.png'), height=350),
+
+    dcc.Markdown("""
+
+        If you read the news, chances are you often hear that quite a few factors contribute to
+        severe outcomes of COVID-19, such as advanced age, being biologically male, and having certain pre-existing 
+        medical conditions (e.g., diabetes, COPD, cancer, heart and kidney diseases, etc.).
+        However, you intuition may not be able to tell you the relative importance of these factors, let alone
+        how much each worsens the patient's outcome.
+ 
+        Using [the Shapley value](https://christophm.github.io/interpretable-ml-book/shapley.html), we can figure out more precisely
+        how much each feature matters to the final prediction and in what way. As can be seen from the figure below, being over 70 
+        and even 80 and having a pre-existing medical condition are major contributors to COVID-19 outcome severity. 
+
+        """),
+
+    html.Img(src=app.get_asset_url('feature_imps.png'), height=500),
+
+    dcc.Markdown('*&copy; 2020 Yuan Meng*')
 
 ])
 

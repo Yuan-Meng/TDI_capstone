@@ -68,7 +68,9 @@ layout = html.Div([
                 },
             }
         }
-    )
+    ),
+
+    dcc.Markdown('*&copy; 2020 Yuan Meng*')
 
     ])
 
